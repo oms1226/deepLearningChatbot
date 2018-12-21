@@ -88,11 +88,17 @@ def rnn_stock_2():
     xx = np.float32(xx)
     yy = np.float32(yy)
 
+    train_size = int(len(xx) * 0.7)
+    x_train, x_test = xx[:train_size], xx[train_size:]
+    y_train, y_test = yy[:train_size], yy[train_size:]
+
+    ph_x = tf.placeholder(tf.float32, [None, seq_length, n_classes])
+
     cell = tf.nn.rnn_cell.BasicRNNCell(num_units=hidden_size)
-    outputs, _states = tf.nn.dynamic_rnn(cell, xx, dtype=tf.float32)
+    outputs, _states = tf.nn.dynamic_rnn(cell, ph_x, dtype=tf.float32)
 
     z = tf.layers.dense(outputs[:, -1], output_dim)
-    loss = tf.reduce_mean((z - yy) ** 2)
+    loss = tf.reduce_mean((z - y_train) ** 2)
 
     optimizer = tf.train.AdamOptimizer(0.1)
     train = optimizer.minimize(loss)
@@ -101,8 +107,8 @@ def rnn_stock_2():
     sess.run(tf.global_variables_initializer())
 
     for i in range(100):
-        sess.run(train)
-        print(i, sess.run(loss))
+        sess.run(train, {ph_x: x_train})
+        print(i, sess.run(loss, {ph_x: x_train}))
 
     print('-' * 50)
     sess.close()
