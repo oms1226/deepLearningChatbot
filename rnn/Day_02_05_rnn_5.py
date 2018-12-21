@@ -1,4 +1,4 @@
-#Day_02_04_rnn_5.py
+#Day_02_05_rnn_5.py
 import numpy as np
 import tensorflow as tf
 
@@ -50,12 +50,12 @@ def rnn_5(text_array):
         pred = sess.run(z)
         pred_arg = np.argmax(pred, axis=2) #(1, 5, 6)
         # print(i, pred_arg, vocab[pred_arg])
-        print(i, *vocab[pred_arg])
+        print(i, *vocab[pred_arg])# *는 unpacking 문법이다.
 
         # print(i, sess.run(loss))
     print('-' * 50)
 
-    print(*vocab[sess.run(y)])
+    print(*vocab[sess.run(y)])# *는 unpacking 문법이다.
     sess.close()
 
 rnn_5(['tensor', 'coffee', 'yellow'])
