@@ -66,7 +66,7 @@ def rnn_3_1():
 def rnn_3_2():
     vocab = np.array(list('enorst'))
 
-    # tenso
+    # tensor
     x = [[0., 0., 0., 0., 0., 1.],
          [1., 0., 0., 0., 0., 0.],
          [0., 1., 0., 0., 0., 0.],
