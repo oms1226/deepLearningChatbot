@@ -23,7 +23,7 @@ def make_onshot_long_text(long_text, seq_length=20):
 
     return np.float32(xx), tf.constant(np.int32(yy)), lb.classes_
 
-def rnn_6_final(long_text):
+def rnn_6_final(long_text, loop_count):
     x, y, vocab = make_onshot_long_text(long_text)
     print(x.shape, y.shape, vocab)
 
@@ -47,7 +47,7 @@ def rnn_6_final(long_text):
     sess = tf.Session()
     sess.run(tf.global_variables_initializer())
 
-    for i in range(100):
+    for i in range(loop_count):
         sess.run(train)
         print(i, sess.run(loss))
     print('-' * 50)
@@ -68,6 +68,32 @@ def rnn_6_final(long_text):
 
     # print(i, pred_arg, vocab[pred_arg])
     # print(*vocab[sess.run(y)])# *는 unpacking 문법이다.
+
+    #문제
+    #정확도를 알려주세요
+    correct = list(long_text)
+    predict = list(total)
+    correct_count = 0
+    for i in range(len(long_text)):
+        if correct[i] == predict[i]:
+            correct_count += 1
+
+    print("accuracy:" + str(correct_count/len(long_text)))
+    #위에는 내가 푼것
+    #강사님이 제시한 1차 정답
+    vocab = list(vocab)
+    t1 = [vocab.index(c) for c in total[1:]]
+    print(t1)
+    t2 = [vocab.index(c) for c in long_text[1:]]
+    print(t2)
+    print(np.mean(np.int32(t1) == np.int32(t2)))
+
+    #강사님이 제시한 2차 정답
+    print(np.mean(np.array(list(total[1:])) == np.array(list(long_text[1:]))))
+
+    # 강사님이 제시한 3차 정답
+    print(np.mean([t1 == t2 for t1, t2 in zip(total[1:], long_text[1:])]))
+
     sess.close()
 
 #구글에서 drum up people 검색하여
@@ -75,7 +101,7 @@ def rnn_6_final(long_text):
 text = ("If you want to build a ship, don't drum up people to collect wood "
         "and don't assign them tasks and work, but rather teach them "
         "to long for the endless immensity of the sea.")
-rnn_6_final(text)
+rnn_6_final(text, 300)
 
 
 print('\n\n\n\n\n\n\n\n')
