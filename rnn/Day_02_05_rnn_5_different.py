@@ -45,8 +45,8 @@ def rnn_5_different(text_array):
     z = tf.layers.dense(outputs, n_classes)
 
     dummy_w = tf.ones([batch_size, seq_length])
-    loss_i = tf.contrib.seq2seq.sequence_loss(logits=z, targets=y, weights=dummy_w)
-    loss = tf.reduce_mean(loss_i)
+    loss = tf.contrib.seq2seq.sequence_loss(logits=z, targets=y, weights=dummy_w)
+    # loss = tf.reduce_mean(loss_i)
 
     optimizer = tf.train.AdamOptimizer(0.1)
     train = optimizer.minimize(loss)
