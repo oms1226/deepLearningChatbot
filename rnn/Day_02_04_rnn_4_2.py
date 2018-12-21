@@ -2,6 +2,8 @@
 import numpy as np
 import tensorflow as tf
 
+#scipy, scikit-Learn, sklearn 설치
+from sklearn import preprocessing
 
 def make_onshot_basic(text):
     idx2char = sorted(set(text))
@@ -29,12 +31,24 @@ def make_onshot_basic(text):
 
     return np.float32([xx]), tf.constant([y]), np.array(idx2char)
 
+def make_onshot(text):
+    data = list(text)
+    lb = preprocessing.LabelBinarizer().fit(data)
+    print(lb)
+    print(lb.classes_)
 
+    onehot = lb.transform(data)
+    print(onehot)
 
+    x = onehot[:-1]
+    y = np.argmax(onehot[1:], axis=1)
 
+    #return np.float32([x]), tf.constant(y.reshape(-1, y.size)), lb.classes_
+    return np.float32([x]), tf.constant(y.reshape(1, -1)), lb.classes_
 
 def rnn_4(text):
-    x, y, vocab = make_onshot_basic(text)
+    #x, y, vocab = make_onshot_basic(text)
+    x, y, vocab = make_onshot(text)
     print(x.shape, y.shape, vocab)
 
     # # tensor
