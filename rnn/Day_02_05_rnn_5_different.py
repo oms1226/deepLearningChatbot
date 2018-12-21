@@ -39,7 +39,8 @@ def rnn_5_different(text_array):
     text_len = [len(i) for i in text_array]
 
     cell = tf.nn.rnn_cell.BasicRNNCell(num_units=hidden_size)
-    outputs, _states = tf.nn.dynamic_rnn(cell, x, dtype=tf.float32)
+    outputs, _states = tf.nn.dynamic_rnn(cell, x, dtype=tf.float32,
+                                         sequence_length=text_len)
 
     z = tf.layers.dense(outputs, n_classes)
 
