@@ -17,7 +17,9 @@ pred2 = [[[0.7,0.2], [0.2,0.6], [0.9,0.2]]]
 
 show_sequence_loss([[1,1,1]], pred1) #각 두번째 항목의 1까지의 거리
 show_sequence_loss([[0,0,0]], pred2) #각 첫번째 항목의 1까지의 거리
-show_sequence_loss([[0.5,0.5,0.5]], pred1) #error
+#show_sequence_loss([[0.5,0.5,0.5]], pred1) #error
 #show_sequence_loss([[2,2,2]], pred1) #error
+#show_sequence_loss([[1,1,1,1]], pred1) #error
 
-show_sequence_loss([[2,2,2]], pred1)
+show_sequence_loss([[2,2,2]], [[[0.2,0.7, 0.5], [0.6,0.2, 0.5], [0.2,0.9, 0.5]]])
+show_sequence_loss([[1,1,1,1]], [[[0.2,0.7], [0.6,0.2], [0.2,0.9], [0.2,0.9]]])

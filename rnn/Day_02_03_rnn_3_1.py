@@ -59,9 +59,55 @@ def show_argmax():
     print(np.argmax(b, axis=1))#수평(2,?,4) --> 3개의 수직 값 중 젤 높은 것
     print(np.argmax(b, axis=2))#(2,3,?) --> 4개의 수평 값 중 젤 높은 것
 
+def show_onehot():
+    a = np.arange(5)
+    print(a)
 
-show_matmul()
+    print(a[0], a[-1])
+    print(a[[0, -1]])
+    print(a[[0, -1, 2, 3, 0, 0, 0]]) #index array
+    print()
+
+    eye = np.eye(5, dtype=np.int32)
+    print(eye)
+    print()
+    print(eye[0])
+    print(eye[3])
+    print()
+
+    print(eye[[0,3]])
+
+    print()
+
+    print(eye[[0,3,1,3,3]])
+
+    print('-' * 50)
+
+    a = np.arange(12).reshape(2,2,3)
+    print(a)
+    print(a[0])
+    print(a[1])
+    print()
+
+    print(a[0][0], a[0][1])
+    print(a[0, 0], a[0, 1]) #fancy indexing 위 라인과 결과는 똑같지만 다른 연산을 하게된다.
+    print()
+
+    print(a[0][0][0], a[0][1][0])
+    print(a[0, 0, 0], a[0, 1, 0])
+    print()
+
+    print(a[0, 0], a[0, 1])
+    print(a[0, 0, :], a[0, 1, :]) #위 라인과 동일한 코드이다.
+    print(a[0, 0, ::-1], a[0, 1, ::-1])
+    print()
+
+    print(a)
+    print(a[0, :, 0], a[0, :, 1])#각쪽에 열을 선택하게 된다.
+
+#show_matmul()
 #show_squeeze()
-show_argmax()
+#show_argmax()
+show_onehot()
 
-print (platform.architecture())
+#print (platform.architecture())
