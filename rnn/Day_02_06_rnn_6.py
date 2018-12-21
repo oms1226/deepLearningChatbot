@@ -32,8 +32,9 @@ def rnn_6_final(long_text, loop_count):
 
     text_len = [len(i) for i in long_text]
 
-    cell = tf.nn.rnn_cell.BasicRNNCell(num_units=hidden_size)
-    outputs, _states = tf.nn.dynamic_rnn(cell, x, dtype=tf.float32)
+    cells = [tf.nn.rnn_cell.BasicRNNCell(num_units=hidden_size) for _ in range(2)]
+    multi = tf.contrib.rnn.MultiRNNCell(cells)
+    outputs, _states = tf.nn.dynamic_rnn(multi, x, dtype=tf.float32)
 
     z = tf.layers.dense(outputs, n_classes)
 
@@ -92,6 +93,7 @@ def rnn_6_final(long_text, loop_count):
     print(np.mean(np.array(list(total[1:])) == np.array(list(long_text[1:]))))
 
     # 강사님이 제시한 3차 정답
+    print([t1 == t2 for t1, t2 in zip(total[1:], long_text[1:])])
     print(np.mean([t1 == t2 for t1, t2 in zip(total[1:], long_text[1:])]))
 
     sess.close()
