@@ -42,5 +42,15 @@ def show_map():
     with tf.Session() as sess:
         print(sess.run(map_op))#[ 0  1  4  9 16 25]
 
+
+def show_scan():
+    inputs = np.array(['1', '2', '3', '4', '5'])
+
+    scan_op = tf.scan(lambda a, n: a + n, inputs)#a 값이 누적되어 리턴된다.
+
+    with tf.Session() as sess:
+        print(sess.run(scan_op))[b'1' b'12' b'123' b'1234' b'12345']
+
 # show_lambda()
 # show_map()
+show_scan()
