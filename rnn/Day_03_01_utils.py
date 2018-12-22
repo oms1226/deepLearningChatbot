@@ -1,5 +1,8 @@
 #Day_03_01_utils.py
 
+import numpy as np
+import tensorflow as tf
+
 def show_lambda():
     def twice(n):
         return n * 2
@@ -26,4 +29,18 @@ def show_lambda():
     proxy(lambda n: n * 2, 3)
 
 
+def show_map():
+    def square(n):
+        return n * n
+
+
+    inputs = np.array([0, 1, 2, 3, 4, 5])
+
+    #map_op = tf.map_fn(square, inputs)
+    map_op = tf.map_fn(lambda n: n * n, inputs)
+
+    with tf.Session() as sess:
+        print(sess.run(map_op))#[ 0  1  4  9 16 25]
+
 # show_lambda()
+# show_map()
