@@ -38,7 +38,7 @@ def build_model():
 def do_train(logits, ph_enc_in, ph_dec_in, ph_targets, loop_count=501, will_save=False):
     loss_i = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=logits, labels=ph_targets)
     loss = tf.reduce_mean(loss_i)
- m  
+
     optimizer = tf.train.AdamOptimizer(0.01)
     train = optimizer.minimize(loss)
 

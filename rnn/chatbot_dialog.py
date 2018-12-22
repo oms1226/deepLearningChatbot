@@ -16,6 +16,7 @@ _PRE_DEFINED_ = ['_PAD_', '_STA_', '_EOS_', '_UNK_']
 def make_vocab():
     with open(PATH_SOURCE, 'r', encoding='utf-8') as fr:
         content = fr.read()
+        #직접 토크나이즈를 생성하지 않고 nltk에서 가져다 써야 된다.
         words = nltk.regexp_tokenize(content, '\w+')
         words = sorted(set(words))
 
@@ -57,6 +58,7 @@ def load_dialog():
     assert len({id(p) for p in dialogs}) == len(dialogs)
     return dialogs, vocab
 
+    #아래 코드는 기존 콜빈해커 코드인데 강사님이 위와 같이 수정하였다.
     # 메모리를 공유하기 때문에 문제 발생하는 코드
     # return dialogs + dialogs[1:] + dialogs[:1], vocab
 
