@@ -30,7 +30,7 @@ def mnist_rnn_step():
     # outputs, _states = tf.nn.dynamic_rnn(cell, ph_x, dtype=tf.float32)
     # final = outputs[:, -1, :] # --> (100, 150)
     # z = tf.layers.dense(final, n_classes)
-    ####수정후(cell 내부를 직접 구현)#######
+    ####수정후(cell 내부를 직접 구현 nlp_rnn.pdf 138page를 직접 구현)#######
     w_h = tf.Variable(tf.zeros([hidden_size, hidden_size])) #hidden state
     w_x = tf.Variable(tf.zeros([elem_size, hidden_size]))  # inputs
     b_x = tf.Variable(tf.zeros([hidden_size]))  # inputs
@@ -58,15 +58,17 @@ def mnist_rnn_step():
     w_l = tf.Variable(tf.truncated_normal([hidden_size, n_classes], mean=0, stddev=0.01))
     b_l = tf.Variable(tf.truncated_normal([n_classes], mean=0, stddev=0.01))
 
-    def get_linear(outputs):
-        return tf.matmul(outputs, w_l) + b_l
+    #z = tf.matmul(outputs[-1], w_l) + b_l
+    #위와 같이 해도 동작한다.
+    def get_linear(prev_outputs):
+        return tf.matmul(prev_outputs, w_l) + b_l
 
     z = tf.map_fn(get_linear, outputs)
     print(z.shape)#(28, 100, 10)
 
     z = z[-1]
     print(z.shape)#(100, 10)
-    ###############
+    #######################
     loss_i = tf.nn.softmax_cross_entropy_with_logits_v2(logits=z, labels=ph_y)
     loss = tf.reduce_mean(loss_i)
 
