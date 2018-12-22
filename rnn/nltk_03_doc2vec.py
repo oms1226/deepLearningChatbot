@@ -33,7 +33,7 @@ def make_vocab():
     # 1583820, ['plot', ':', 'two', 'teen', 'couples', 'go', 'to', 'a', 'church', 'party']
 
     # 100개 단위로 성능 시각화 진행하면 좋겠다.
-    all_words = nltk.FreqDist(w.lower() for w in words)
+    all_words = nltk.FreqDist(w.lower() for w in words)#출현 카운트 보다도 빈도수 dist가 좋다
     most_2000 = all_words.most_common(2000)
     print(most_2000[:5])
     # [(',', 77717), ('the', 76529), ('.', 65876), ('a', 38106), ('and', 35576)]
@@ -68,7 +68,8 @@ def document_features(doc, vocab):
     for word in vocab:
         # True or False. 특정 단어의 "있음/없음"을 표시.
         key = 'contains({})'.format(word)
-        features[key] = (word in doc_words)
+        features[key] = (word in doc_words)#doc2vec
+        #true/false 보다는 count 를 계산해서 넣는 것이 더 의미 있을텐데라고 설명하셨다.
 
         # (결론은 실패. 오히려 좋지 않게 나온다. 확실한 것은 훨씬 오랜 시간이 걸린다. 원인은 파악하지 않았다.)
         # features[key] = doc.count(word)
@@ -123,7 +124,7 @@ def show_accuracy():
     vocab = make_vocab()
     documents = make_documents()
 
-    random.seed(1)
+    # random.seed(1)
     random.shuffle(documents)
 
     feature_sets = [(document_features(doc, vocab), c) for (doc, c) in documents]
